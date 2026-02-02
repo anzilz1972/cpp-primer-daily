@@ -12,7 +12,7 @@
                 "${file}",
                 "-I","/mnt/f/DevCpp/WGALIB",  
                 "-o",
-                "${fileDirname}/${fileBasenameNoExtension}"
+                "${fileDirname}/${fileBasenameNoExtension}.o"
             ],
             "group": {
                 "kind": "build",
