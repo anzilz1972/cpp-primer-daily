@@ -1,0 +1,28 @@
+# 编译产物
+*.exe
+*.o
+*.out
+*.a
+*.so
+*.dll
+
+# IDE文件
+.vscode/settings.json
+.vscode/launch.json
+*.code-workspace
+
+# 临时文件
+*.tmp
+*.bak
+*~
+.DS_Store
+Thumbs.db
+
+# 日志文件
+*.log
+
+# 调试信息
+*.dSYM/
+*.su
+*.idb
+*.pdb
