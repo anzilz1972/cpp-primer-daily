@@ -44,9 +44,9 @@ template <typename T>
     void PrintInfo(const T &v ,const std::string vname)
 {
     std::string vTypeString = "Type others";
-    if (std::is_same<T, std::vector<int>>::value) vTypeString = "vector<int>";
-    if (std::is_same<T, std::vector<std::string>>::value) vTypeString = "vector<string>";
-    if (std::is_same<T, std::array<int,5>>::value) vTypeString = "array<int,5>";
+    if constexpr (std::is_same_v<T, std::vector<int>>) vTypeString = "vector<int>";
+    if constexpr (std::is_same_v<T, std::vector<std::string>>) vTypeString = "vector<string>";
+    if constexpr (std::is_same_v<T, std::array<int,5>>) vTypeString = "array<int,5>";
     
     std::cout << vname << std::endl 
         << "Type: " << vTypeString << std::endl;
