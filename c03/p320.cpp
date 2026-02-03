@@ -6,15 +6,6 @@
 #include "wga.h"
 
 
-////////////////////////////////////////////////////////////////////////////////
-//用cin.peek()检测到输入流中的换行符时，在vector中加入一串特殊字符做标记
-//之所以记录换行符，主要是为了将内容区分存放在 vector 和 matrix
-//vector 包括：std::vector<int>> 、 std::vector<double>、std::vector<std::string>> 等...
-//matrix 包括：std::vector<std::vector<int>>  、 std::vector<std::vector<double>>、std::vector<std::vector<std::string>> 等...
-const std::string  LineBreakFlag = "&&LineBreak&&";
-
-// 从cin读入数字和字符串，存储在strVec中
-void getStr(std::vector<std::string> &strBuffer);
 
 // 打印一维和二维矩阵
 /**
@@ -96,7 +87,7 @@ int main()
 
     //从控制台读入一行或N行字符串，存在在strbuff中，用作初始化各类vector
     std::vector<std::string> strbuff;
-    getStr(strbuff);
+    GetStrToVec(strbuff);
 
     for (auto const &elem : strbuff)
     {
@@ -198,44 +189,6 @@ int main()
 }
 
 
-////////////////////////////////  cin读入函数 和 打印函数 ////////////////////////////////////////////////////
-// 从cin读入一行或多行字符串，分解成一个个单词后，存储在strVec中
-// 两行相邻的单词之间，在strBuffer中插入 "&&Enter&&" 作为 “换行” 标记
-void getStr(std::vector<std::string> &strBuffer)
-{
-    std::string str;
-
-    //输入多个字符串，以EOF结束
-    //Windows     环境下，EOF是--> "Ctrl+Z"
-    //Linux/macOS 环境下，EOF是--> "Ctrl+D"
-    std::cout << " Under windows,     ****** EOF --> Ctrl+Z ******" << std::endl;
-    std::cout << " Under Linux/macOS, ****** EOF --> Ctrl+D ******" << std::endl;
-    std::cout << "Input some strings , End of EOF:" << std::endl;
-
-    while (std::cin >> str)
-    {
-        strBuffer.push_back(str);
-
-        //关键：偷窥缓冲区下一个字符
-        //如果下一个字符是换行符，而且tempVec的最后一个元素不是代表换行符的 "&&Enter&&"
-        //则在tmpVec中加入特殊字符串"&&Enter&&"，同时消除重复的换行符
-        if (std::cin.peek() == '\n' &&  !strBuffer.empty() && strBuffer.back() != LineBreakFlag)
-        {
-            strBuffer.push_back(LineBreakFlag);
-            std::cin.get(); //消费掉换行符
-        }    
-        
-        //如果发生错误，处理后继续
-        if (std::cin.bad())
-        {
-            std::cout << "Input ERROR,Try again!!!" << std::endl;
-            //重置错误状态
-            std::cin.clear();
-            //清空缓冲区的错误输入并继续输入
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
-        }
-    }
-}
 
 
 // 打印一维和二维矩阵
