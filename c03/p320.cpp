@@ -7,14 +7,6 @@
 
 
 
-// 打印一维和二维矩阵
-/**
- * @brief 显示对象的类型、容量和成员
- * @details 
- */
-template <typename T>
-    void PrintVector(T &v);
-
 
 ////////////////////////////////////////////////////////////////////////////////
 // 初始化一维和二维Vector
@@ -26,49 +18,6 @@ template <typename T>
  */
 template <typename T>
     void InitVector_old(T &v , const std::vector<std::string> &sbuffer);
-
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-// C++20 Concepts for type safety
-template <typename T>
-concept Vector1D = std::is_same_v<T, std::vector<int>> ||
-                      std::is_same_v<T, std::vector<float>> ||
-                      std::is_same_v<T, std::vector<double>> ||
-                      std::is_same_v<T, std::vector<std::string>>; 
-
-template <typename T>
-concept Vector2D = std::is_same_v<T, std::vector<std::vector<int>>> ||
-                      std::is_same_v<T, std::vector<std::vector<float>>> ||
-                      std::is_same_v<T, std::vector<std::vector<double>>> || 
-                      std::is_same_v<T, std::vector<std::vector<std::string>>> ;
-
-//初始化一维和二维Vector
-//InitVector_new：引入C++20 concepts，通过对模板函数的显示类型约束，简化代码实现，提高可读性
-//T: 一维和二维Vector
-/**
- * @brief 
- * @details 
- */
-template <typename T>
-    void InitVector_new(T &v , const std::vector<std::string> &sbuffer);
-
-//初始化一维Vector
-/**
- * @brief 
- * @details 
- */
-template <typename T>
-    void InitVector1D(T &v , const std::vector<std::string> &sbuffer);
-
-//初始化二维Vector（Matrix）
-/**
- * @brief 
- * @details 
- */
-template <typename T>
-    void InitVector2D(T &v , const std::vector<std::string> &sbuffer);
 
 
 int main()
@@ -131,235 +80,62 @@ int main()
 
 
     //===================================================================================
-    //=============以下使用InitVector_new函数，初始化一维和二维Vector=======================
+    //=============以下使用InitVector函数，初始化一维和二维Vector=======================
     //===================================================================================
     std::cout << "=====================================================================================" << std::endl;
-    std::cout << "=================== now use InitVector_new() to Init vector =========================" << std::endl;
+    std::cout << "=================== now use InitVector() to Init vector =========================" << std::endl;
     std::cout << "=====================================================================================" << std::endl;
 
     //初始化 vectorInt
     splitline();
     std::cout << "Display received TEXT AS Interger vector:" << std::endl;
-    InitVector_new(vInt , strbuff);
+    InitVector(vInt , strbuff);
     PrintVector(vInt);
     
     //初始化 vectorFloat
     splitline();
     std::cout << "Display received TEXT AS Float vector:" << std::endl;
-    InitVector_new(vFloat , strbuff);
+    InitVector(vFloat , strbuff);
     PrintVector(vFloat);
 
     //初始化 vectorDouble
     splitline();
     std::cout << "Display received TEXT AS Double vector:" << std::endl;
-    InitVector_new(vDouble , strbuff);
+    InitVector(vDouble , strbuff);
     PrintVector(vDouble);
 
     //初始化 vectorStr
     splitline();
     std::cout << "Display received TEXT AS string vector:" << std::endl;
-    InitVector_new(vStr , strbuff);
+    InitVector(vStr , strbuff);
     PrintVector(vStr);
 
     //初始化 matrixInt,形成二维Interger矩阵
     splitline();
     std::cout << "Display received TEXT AS Interger matrix:" << std::endl;
-    InitVector_new(matrixInt , strbuff);
+    InitVector(matrixInt , strbuff);
     PrintVector(matrixInt);
 
     //初始化 matrixInt,形成二维float矩阵
     splitline();
     std::cout << "Display received TEXT AS Float matrix:" << std::endl;
-    InitVector_new(matrixFloat , strbuff);
+    InitVector(matrixFloat , strbuff);
     PrintVector(matrixFloat);
 
     //初始化 matrixInt,形成二维Double矩阵
     splitline();
     std::cout << "Display received TEXT AS Double matrix:" << std::endl;
-    InitVector_new(matrixDouble , strbuff);
+    InitVector(matrixDouble , strbuff);
     PrintVector(matrixDouble);
 
     //初始化 matrixStr,形成二维string矩阵
     splitline();
     std::cout << "Display received TEXT AS string matrix:" << std::endl;
-    InitVector_new(matrixStr , strbuff);
+    InitVector(matrixStr , strbuff);
     PrintVector(matrixStr);
     
     return 0;
 }
-
-
-
-
-// 打印一维和二维矩阵
-/**
- * @brief 显示对象的类型、容量和成员
- * @details 
- */
-template <typename T>
-    void PrintVector(T &v)
-{
-    if constexpr (Vector1D<T>)
-    {
-        for (const auto &elem : v)
-            std::cout << elem << " ";
-        std::cout << std::endl;
-    }
-    else if constexpr (Vector2D<T>)
-    {
-        for (const auto &row : v)
-        {
-            for (const auto &elem : row)
-                std::cout << elem << " ";
-            std::cout << std::endl;
-        }
-    }
-}
-
-
-
-////////////////////////////////  C++20 concepts 示例////////////////////////////////////////////////////
-//初始化一维和二维Vector
-//引入C++20 concepts，通过对模板函数的显示类型约束，简化代码实现，提高可读性
-//
-// T: 各种vector类型
-/**
- * @brief 
- * @details 
- */
-template <typename T>
-    void InitVector_new(T &v , const std::vector<std::string> &sbuffer)
-{
-    if constexpr (Vector1D<T>)
-    {
-        //用sbuffer中存储的string,初始化一维vector v
-        InitVector1D(v , sbuffer);
-    }
-    else if constexpr (Vector2D<T>)
-    {
-        //用sbuffer中存储的string,初始化二维vector v
-        InitVector2D(v , sbuffer);
-    }
-    return;
-}
-
-
-//初始化一维Vector
-/**
- * @brief 
- * @details 
- */
-template <typename T>
-    void InitVector1D(T &v , const std::vector<std::string> &sbuffer)
-{
-    using ElementType = typename T::value_type;
-    //将sbuffer（vector string）中的element，拷贝到目标 v 中
-    //如果element不是std::string，且不能转化为 T::value_type::value_type，直接抛弃
-    v.clear();
-    for (auto &elem : sbuffer)
-    {
-        if (elem == LineBreakFlag) continue; //跳过LineBreakFlag，继续处理下一个element
-        if constexpr (std::is_same_v<ElementType, std::string>){
-            //Vector的elem类型是string:直接添加
-            v.push_back(elem);
-        }
-        else if constexpr (std::is_same_v<ElementType, int>){
-            //Vector的elem是：interger
-            try{
-                v.push_back(std::stoi(elem));
-            }
-            catch(const std::exception& e){
-                //std::cout << "Error: " <<e .what() << std::endl;
-            }
-        }
-        else if constexpr (std::is_same_v<ElementType, float>){
-            //Vector的elem是：float
-            try{
-                v.push_back(std::stof(elem)); 
-            }
-            catch(const std::exception& e){
-                //std::cout << "Error: " <<e .what() << std::endl;
-            }
-        }
-        else if constexpr (std::is_same_v<ElementType, double>){
-            //Vector的elem是：double
-            try{
-                v.push_back(std::stod(elem)); 
-            }
-            catch(const std::exception& e){
-                //std::cout << "Error: " <<e .what() << std::endl;
-            }
-        }
-    }
-    return;
-}
-
-//初始化二维Vector（Matrix）
-/**
- * @brief 
- * @details 
- */
-template <typename T>
-    void InitVector2D(T &v , const std::vector<std::string> &sbuffer)
-{
-    using RowType = typename T::value_type;
-    using ElementType = typename RowType::value_type;
-    RowType currentRow;
-    
-    v.clear();
-    currentRow.clear();
-    for (const auto& s : sbuffer)
-    {
-        //读到LineBreakFlag,将当前Vector追加到Matrix
-        if (s == LineBreakFlag){
-            if (!currentRow.empty()) 
-            {
-                v.push_back(currentRow);
-                currentRow.clear();
-            }
-            continue;
-        }
-
-        //读到非LineBreakFlag,按照currentRow的元素类型进行处理
-        if constexpr (std::is_same_v<ElementType, std::string>){
-            //currentRow的元素类型为string：直接追加到currentRow
-            currentRow.push_back(s);
-        }
-        else if constexpr(std::is_same_v<ElementType, int>){
-            //currentRow的元素类型为int：转换后追加到currentRow
-            try{
-                currentRow.push_back(std::stoi(s));
-            }
-            catch(const std::exception& e){
-                //std::cout << "Error: " <<e.what() << '\n';
-            }
-        }
-        else if constexpr(std::is_same_v<ElementType, float>){
-            //currentRow的元素类型为float：转换后追加到currentRow
-            try{
-                currentRow.push_back(std::stof(s));
-            }
-            catch(const std::exception& e){
-                //std::cout << "Error: " <<e.what() << '\n';
-            }
-        }
-        else if constexpr(std::is_same_v<ElementType, double>){
-            //currentRow的元素类型为double：转换后追加到currentRow
-            try{
-                currentRow.push_back(std::stod(s));
-            }
-            catch(const std::exception& e){
-                //std::cout << "Error: " <<e.what() << '\n';
-            }
-        }
-    }
-
-    //当前currentRow可能未追加到Matrix中，完成追加
-    if (!currentRow.empty()) v.push_back(currentRow);
-    return;
-}
-
-
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////  未使用 C++20 concepts 示例////////////////////////////////////////////////////
