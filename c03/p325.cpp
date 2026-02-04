@@ -20,7 +20,7 @@ int main()
     for (auto &gd : grade)
     {
         it = scores.begin()+ gd/10;
-        (*it) = (*it) + 1;
+        *it = *it + 1;
     }
 
 
@@ -29,8 +29,8 @@ int main()
     {
         //输出99分以下的统计结果
         std::cout << "[" << idx * 10 << "] To [" << idx * 10 + 9 << "]: "
-            << scores[idx] << std::endl;            
-    } while (++idx < scores.size()-1);
+            << scores[idx++] << std::endl;            
+    } while (idx < scores.size()-1);
 
     //单独输出100分的统计结果
     std::cout << "[" << idx * 10 << "]: " << scores[idx] << std::endl;            
