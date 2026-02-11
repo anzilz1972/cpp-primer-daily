@@ -11,10 +11,10 @@ int main()
     std::vector<unsigned>::iterator it;
 
     //从cin读入字符串,缓存在strBuff
-    GetStrToVec(strBuff);
+    wga::GetStrToVec(strBuff);
 
     //将字符串转换为分数后进行存储
-    InitVector(grade,strBuff);
+    wga::InitVector(grade,strBuff);
 
     //用scores统计不同分数段
     for (auto &gd : grade)

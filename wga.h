@@ -7,12 +7,14 @@
 #include <string>
 #include <type_traits>
 #include <limits>
+#include <string_view>
 
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 //用cin.peek()检测到输入流中的换行符时，在vector中加入一串特殊字符做标记
 //之所以记录换行符，主要是为了将内容区分存放在一维vector 和 二维Vector（matrix）中
-const std::string  LineBreakFlag = "&&LineBreak&&";
+// 使用 string_view 避免运行时内存分配，更高效
+inline constexpr std::string_view LineBreakFlag = "&&LineBreak&&";
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -64,7 +66,7 @@ template <typename T>
  * @details 
  */
 template <typename T>
-    void PrintVector(T &v);
+    void PrintVector(const T &v);
 
 
 ////////////////////////////////  C++20 concepts 示例////////////////////////////////////////////////////
@@ -259,7 +261,7 @@ void GetStrToVec(std::vector<std::string> &strBuffer)
         //则在tmpVec中加入特殊字符串"&&Enter&&"，同时消除重复的换行符
         if (std::cin.peek() == '\n' &&  !strBuffer.empty() && strBuffer.back() != LineBreakFlag)
         {
-            strBuffer.push_back(LineBreakFlag);
+            strBuffer.push_back(std::string(LineBreakFlag));
             std::cin.get(); //消费掉换行符
         }    
         
