@@ -22,17 +22,17 @@ inline constexpr std::string_view LineBreakFlag = "&&LineBreak&&";
 //一维vector 包括：std::vector<int>> 、 std::vector<float>> 、std::vector<double>、std::vector<std::string>> ...
 template <typename T>
 concept Vector1D = std::is_same_v<T, std::vector<int>> ||
-                      std::is_same_v<T, std::vector<float>> ||
-                      std::is_same_v<T, std::vector<double>> ||
-                      std::is_same_v<T, std::vector<std::string>>; 
+                    std::is_same_v<T, std::vector<float>> ||
+                    std::is_same_v<T, std::vector<double>> ||
+                    std::is_same_v<T, std::vector<std::string>>; 
 
 //二维matrix 包括：std::vector<std::vector<int>>  、 std::vector<std::vector<float>>、
 //                std::vector<std::vector<double>>、std::vector<std::vector<std::string>> ...
 template <typename T>
 concept Vector2D = std::is_same_v<T, std::vector<std::vector<int>>> ||
-                      std::is_same_v<T, std::vector<std::vector<float>>> ||
-                      std::is_same_v<T, std::vector<std::vector<double>>> || 
-                      std::is_same_v<T, std::vector<std::vector<std::string>>> ;
+                    std::is_same_v<T, std::vector<std::vector<float>>> ||
+                    std::is_same_v<T, std::vector<std::vector<double>>> || 
+                    std::is_same_v<T, std::vector<std::vector<std::string>>> ;
 
 //初始化一维和二维Vectord总入口
 //InitVector：引入C++20 concepts，通过对模板函数的显示类型约束，简化代码实现，提高可读性
