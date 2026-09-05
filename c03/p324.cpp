@@ -23,6 +23,8 @@ int main()
     //PrintVector(vInt);
     //splitline();
 
+    
+    
     //将Interger Vector中前后对称的两个元素相加，并打印
     splitline();
     it1 = vInt.cbegin();
